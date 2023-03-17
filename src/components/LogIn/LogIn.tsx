@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import auth from "@react-native-firebase/auth";
 import { Image, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View, Text } from "react-native";
 
 export const LogIn = () => {
   const { container, content, logo, input, button, text } = styles;
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const signIn = async() => {
+    try {
+        await auth().signInWithEmailAndPassword(email, password)
+    } catch (error) { console.log(error) }
+  }
   return (
     <SafeAreaView style={container}>
       <View style={content}>
@@ -23,7 +29,7 @@ export const LogIn = () => {
             placeholder="Нууц үг"
           />
         </View>
-        <TouchableOpacity style={button}>
+        <TouchableOpacity style={button} onPress={signIn}>
           <Text style={text}>Нэвтрэх</Text>
         </TouchableOpacity>
       </View>
